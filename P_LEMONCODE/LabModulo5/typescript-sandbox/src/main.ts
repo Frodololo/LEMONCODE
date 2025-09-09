@@ -7,12 +7,13 @@ const PUNTUACION_MAX = 7.5;
 interface Juego {
   puntuacion: number;
   estado: EstadoJuego;
-}
+};
 
 let juego: Juego = {
   puntuacion: 0,
   estado: "jugando",
 };
+
 // Devuelve el valor de la carta según su número
 const valorDeCarta = (carta: number): number => (carta >= 10 ? 0.5 : carta);
 // Devuelve un numero aleatorio entre 1 y 10
@@ -33,7 +34,6 @@ const desahabilitarBotones = (): void => {
   const botonDameCarta = document.getElementById("da-carta");
   const botonPlantarse = document.getElementById("plantarse");
   const botonAdivinar = document.getElementById("adivinar");
-
   if (botonDameCarta instanceof HTMLButtonElement)
     botonDameCarta.disabled = true;
   if (botonPlantarse instanceof HTMLButtonElement)
@@ -45,7 +45,6 @@ const desahabilitarBotonesAlPlantarse = (): void => {
   const botonDameCarta = document.getElementById("da-carta");
   const botonPlantarse = document.getElementById("plantarse");
   const botonAdivinar = document.getElementById("adivinar");
-
   if (botonDameCarta instanceof HTMLButtonElement)
     botonDameCarta.disabled = true;
   if (botonPlantarse instanceof HTMLButtonElement)
@@ -91,56 +90,44 @@ const muestraCarta = (urlCarta: string): void => {
     imagen.src = urlCarta;
   }
 };
-// Muestra el mensaje de puntuación según el estado
-const muestraPuntuacion = () => {
-  let elementoPuntuacion = document.getElementById("puntuacion");
+// Lógica para los mensajes
+const mostrarMensaje = (id: string, mensaje: string) => {
+  const elemento = document.getElementById(id);
   if (
-    elementoPuntuacion !== null &&
-    elementoPuntuacion !== undefined &&
-    elementoPuntuacion instanceof HTMLElement
+    elemento !== null &&
+    elemento !== undefined &&
+    elemento instanceof HTMLParagraphElement
   ) {
-    if (juego.estado === "plantado") {
-      elementoPuntuacion.innerHTML = "";
-      return;
-    }
-
-    if (juego.puntuacion > PUNTUACION_MAX) {
-      elementoPuntuacion.innerHTML = "GAME OVER";
-    } else if (juego.puntuacion === PUNTUACION_MAX) {
-      elementoPuntuacion.innerHTML =
-        "Increible performance. Lo clavaste: 7.5 puntos para el campeón";
-    } else {
-      elementoPuntuacion.innerHTML = `Llevas ${juego.puntuacion} puntos.`;
-    }
+    elemento.innerHTML = mensaje;
   }
 };
+// Muestra el mensaje de puntuación según el estado
+const muestraPuntuacion = () => {
+    if (juego.estado === "plantado") {
+      mostrarMensaje("puntuacion", "");
+      return;
+    }
+    if (juego.puntuacion > PUNTUACION_MAX) {
+      mostrarMensaje("puntuacion", "GAME OVER");
+    } else if (juego.puntuacion === PUNTUACION_MAX) {
+      mostrarMensaje("puntuacion", "Increible performance. Lo clavaste: 7.5 puntos para el campeón");
+    } else {
+      mostrarMensaje("puntuacion",`Llevas ${juego.puntuacion} puntos.`);
+    }
+  };
 // Muestra el mensaje tras plantarse según la puntuación
 const muestraMensajeTrasPlantarse = () => {
-  const mensajeTrasPlantarse = document.getElementById("mensaje-plantarse");
-  if (
-    mensajeTrasPlantarse !== null &&
-    mensajeTrasPlantarse !== undefined &&
-    mensajeTrasPlantarse instanceof HTMLParagraphElement
-  ) {
     if (juego.puntuacion < 4) {
-      mensajeTrasPlantarse.innerHTML = "Has sido muy conservador";
+      mostrarMensaje("mensaje-plantarse", "Has sido muy conservador");
     } else if (juego.puntuacion >= 4 && juego.puntuacion < 6) {
-      mensajeTrasPlantarse.innerHTML = "Te ha entrado el canguelo, ¿eh?";
+      mostrarMensaje("mensaje-plantarse", "Te ha entrado el canguelo, ¿eh?");
     } else if (juego.puntuacion >= 6) {
-      mensajeTrasPlantarse.innerHTML = "Casi... casi...";
+      mostrarMensaje("mensaje-plantarse", "Casi... casi...");
     }
-  }
 };
 // Muestra mensaje con puntuación al plantarse
 const mostrarMensajePlantado = (): void => {
-  const elementoMensaje = document.getElementById("mensaje");
-  if (
-    elementoMensaje !== null &&
-    elementoMensaje !== undefined &&
-    elementoMensaje instanceof HTMLParagraphElement
-  ) {
-    elementoMensaje.innerHTML = `Te has plantado con ${juego.puntuacion} puntos.`;
-  }
+mostrarMensaje("mensaje", `Te has plantado con ${juego.puntuacion} puntos.`);
 };
 // Devuelve el estado de la partida (solo para ganar o perder)
 const obtenerEstadoPartida = () => {
@@ -153,36 +140,25 @@ const obtenerEstadoPartida = () => {
 };
 // Muestra el mensaje final
 const mostrarMensajeEstadoPartida = (estado: EstadoJuego) => {
-  const elementoMensaje = document.getElementById("mensaje");
-
-  if (
-    elementoMensaje !== null &&
-    elementoMensaje !== undefined &&
-    elementoMensaje instanceof HTMLParagraphElement
-  ) {
     switch (estado) {
       case "ganado":
-        elementoMensaje.innerHTML = "¡Victoria total!";
+        mostrarMensaje("mensaje", "¡Victoria total!");
         break;
-
       case "perdido":
         if (juego.puntuacion > PUNTUACION_MAX) {
-          elementoMensaje.innerHTML = "Te has pasado de 7.5. Perdiste 🪦.";
+          mostrarMensaje("mensaje", "Te has pasado de 7.5. Perdiste 🪦.");
         } else {
-          elementoMensaje.innerHTML = `Te has plantado con ${juego.puntuacion} puntos.`;
+          mostrarMensaje("mensaje", `Te has plantado con ${juego.puntuacion} puntos.`);
         }
         break;
-
       default:
-        elementoMensaje.innerHTML = "";
+        mostrarMensaje("mensaje", "");
     }
-  }
-};
+  };
 // Gestiona el estado de la partida tras cada acción
 const gestionarEstadoPartida = () => {
   juego.estado = obtenerEstadoPartida();
   mostrarMensajeEstadoPartida(juego.estado);
-
   if (juego.estado === "ganado" || juego.estado === "perdido") {
     desahabilitarBotones();
   }
@@ -191,31 +167,11 @@ const gestionarEstadoPartida = () => {
 const reiniciarJuego = (): void => {
   juego.estado = "jugando";
   juego.puntuacion = 0;
-
-  const mensaje = document.getElementById("mensaje");
-  if (
-    mensaje !== null &&
-    mensaje !== undefined &&
-    mensaje instanceof HTMLParagraphElement
-  )
-    mensaje.innerHTML = "";
-  const mensajePlantarse = document.getElementById("mensaje-plantarse");
-  if (
-    mensajePlantarse !== null &&
-    mensajePlantarse !== undefined &&
-    mensajePlantarse instanceof HTMLParagraphElement
-  )
-    mensajePlantarse.innerHTML = "";
-  const mensajeAdivinar = document.getElementById("mensaje-adivinar");
-  if (
-    mensajeAdivinar !== null &&
-    mensajeAdivinar !== undefined &&
-    mensajeAdivinar instanceof HTMLParagraphElement
-  )
-    mensajeAdivinar.innerHTML = "";
+  mostrarMensaje("mensaje", "");
+  mostrarMensaje("mensaje-plantarse", "");
+  mostrarMensaje("mensaje-adivinar", "");
   (document.getElementById("da-carta") as HTMLButtonElement).disabled = false;
   (document.getElementById("plantarse") as HTMLButtonElement).disabled = false;
-
   const carta = document.getElementById("carta");
   if (
     carta !== null &&
@@ -224,15 +180,12 @@ const reiniciarJuego = (): void => {
   )
     carta.src =
       "https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/back.jpg";
-
   const botonDameCarta = document.getElementById("da-carta");
   if (botonDameCarta instanceof HTMLButtonElement)
     botonDameCarta.disabled = false;
-
   const botonPlantarse = document.getElementById("plantarse");
   if (botonPlantarse instanceof HTMLButtonElement)
     botonPlantarse.disabled = false;
-
   const botonAdivinar = document.getElementById("adivinar");
   if (botonAdivinar instanceof HTMLButtonElement) {
     botonAdivinar.style.display = "none";
@@ -276,19 +229,16 @@ if (
 // Lógica al pulsar Plantarse
 const plantarse = (): void => {
   if (juego.estado !== "jugando") return;
-
   juego.estado = "plantado";
   muestraPuntuacion();
   muestraMensajeTrasPlantarse();
   mostrarMensajePlantado();
   desahabilitarBotonesAlPlantarse();
-
   const botonAdivinar = document.getElementById("adivinar");
   if (botonAdivinar instanceof HTMLButtonElement) {
-    botonAdivinar.style.display = "inline-block"; //
+    botonAdivinar.style.display = "inline-block";
     botonAdivinar.disabled = false;
   }
-
   desahabilitarBotonesAlPlantarse();
 };
 // Evento para el botón Plantarse
@@ -305,37 +255,17 @@ if (
 // Lógica al pulsar Adivinar
 const adivinar = (): void => {
   if (juego.estado !== "plantado" && juego.estado !== "adivinando") return;
-
   // Limpiar otros mensajes
-  const mensajePlantarse = document.getElementById("mensaje-plantarse");
-  if (mensajePlantarse instanceof HTMLParagraphElement)
-    mensajePlantarse.innerHTML = "";
-
-  const mensaje = document.getElementById("mensaje");
-  if (
-    mensaje !== null &&
-    mensaje !== undefined &&
-    mensaje instanceof HTMLParagraphElement
-  )
-    mensaje.innerHTML = "";
-
+  mostrarMensaje("mensaje-plantarse", "");
+  mostrarMensaje("mensaje","");
   // Mensaje exclusivo de adivinar
-  const mensajeAdivinar = document.getElementById("mensaje-adivinar");
-  if (
-    mensajeAdivinar !== null &&
-    mensajeAdivinar !== undefined &&
-    mensajeAdivinar instanceof HTMLParagraphElement
-  ) {
-    mensajeAdivinar.innerHTML = "Esta hubiera sido tu siguiente carta...🃏";
-  }
+  mostrarMensaje("mensaje-adivinar", "Esta hubiera sido tu siguiente carta...🃏");
   // Deshabilitar el botón Adivinar
   const botonAdivinar = document.getElementById("adivinar");
   if (botonAdivinar instanceof HTMLButtonElement) botonAdivinar.disabled = true;
-
   const numero = obtenerNumeroAleatorio();
   const carta = dameCarta(numero);
   muestraCarta(obtenerUrlCarta(carta));
-
   juego.estado = "perdido";
   desahabilitarBotones();
 };
@@ -349,8 +279,7 @@ if (
   botonAdivinar.addEventListener("click", () => {
     adivinar();
   });
-}
-
+};
 // Evento para el botón Nueva Partida
 const botonNuevaPartida = document.getElementById("nuevaPartida");
 if (
@@ -359,4 +288,4 @@ if (
   botonNuevaPartida instanceof HTMLButtonElement
 ) {
   botonNuevaPartida.addEventListener("click", reiniciarJuego);
-}
+};
