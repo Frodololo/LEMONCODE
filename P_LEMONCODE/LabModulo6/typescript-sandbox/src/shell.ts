@@ -1,6 +1,10 @@
-import { plantarse, adivinar, daCarta, muestraPuntuacion } from "./motor";
-import { reiniciarJuego } from "./ui";
-
+import {
+  reiniciarJuego,
+  muestraPuntuacion,
+  daCarta,
+  plantarse,
+  adivinar,
+} from "./ui";
 // Inicia la interfaz al cargar la página
 document.addEventListener("DOMContentLoaded", () => {
   muestraPuntuacion();
