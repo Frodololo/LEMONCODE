@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="stylesheet" href="./src/style.css" />
+    <link
+      rel="preconnect"
+      href="https://raw.githubusercontent.com"
+      crossorigin
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Yasei7</title>
+  </head>
+  <body>
+    <header>
+      <h1>Yasei 7</h1>
+    </header>
+    <main id="app">
+      <section class="zona-juego">
+        <figure class="cartaActual">
+          <img
+            id="carta"
+            src="https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/back.jpg"
+            alt="Dorso de la carta en juego"
+            width="300"
+            height="440"
+            fetchpriority="high"
+          />
+          <figcaption>Mazo con las cartas del juego</figcaption>
+        </figure>
+
+        <div class="botones">
+          <button type="button" id="da-carta">Dame carta</button>
+          <button type="button" id="plantarse">Me planto</button>
+          <button type="button" id="nuevaPartida">Nueva partida</button>
+          <button type="button" id="adivinar" style="display: none">
+            Adivinar
+          </button>
+        </div>
+      </section>
+
+      <section class="mensajes-juego">
+        <p id="puntuacion"></p>
+        <p id="mensaje"></p>
+        <p id="mensaje-plantarse"></p>
+        <p id="mensaje-adivinar"></p>
+      </section>
+    </main>
+    <script type="module" src="./src/main.ts"></script>
+  </body>
+</html>
