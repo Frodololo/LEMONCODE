@@ -1,4 +1,4 @@
-import { juego } from "./modelo";
+import { juego, PUNTUACION_MAX } from "./modelo";
 
 // Devuelve el valor de la carta según su número
 export const valorDeCarta = (carta: number): number =>
@@ -16,4 +16,13 @@ export const sumarPuntos = (puntos: number): number =>
 // Actualiza la puntuación
 export const actualizarPuntuacion = (puntos: number): void => {
   juego.puntuacion = puntos;
+};
+// Devuelve el estado de la partida (solo para ganar o perder)
+export const obtenerEstadoPartida = () => {
+  if (juego.puntuacion === PUNTUACION_MAX) {
+    juego.estado = "ganado";
+  } else if (juego.puntuacion > PUNTUACION_MAX) {
+    juego.estado = "perdido";
+  }
+  return juego.estado;
 };

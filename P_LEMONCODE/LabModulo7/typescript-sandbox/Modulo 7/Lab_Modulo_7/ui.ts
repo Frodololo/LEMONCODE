@@ -5,6 +5,7 @@ import {
   obtenerNumeroAleatorio,
   sumarPuntos,
   actualizarPuntuacion,
+  obtenerEstadoPartida
 } from "./motor";
 
 // Deshabilita todos los botones
@@ -139,15 +140,6 @@ export const muestraMensajeTrasPlantarse = () => {
 // Muestra mensaje con puntuación al plantarse
 export const mostrarMensajePlantado = (): void => {
   mostrarMensaje("mensaje", `Te has plantado con ${juego.puntuacion} puntos.`);
-};
-// Devuelve el estado de la partida (solo para ganar o perder)
-export const obtenerEstadoPartida = () => {
-  if (juego.puntuacion === PUNTUACION_MAX) {
-    juego.estado = "ganado";
-  } else if (juego.puntuacion > PUNTUACION_MAX) {
-    juego.estado = "perdido";
-  }
-  return juego.estado;
 };
 // Muestra el mensaje final
 export const mostrarMensajeEstadoPartida = (estado: EstadoJuego) => {
