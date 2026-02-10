@@ -1,171 +1,246 @@
-// Tipar un array
+type Especialidad = "Medico de familia" | "Pediatra" | "Cardiólogo";
 
-const edades: number[] = [1, 2, 3, 4, 5];
-
-// Tipar un array de strings
-
-const películas: string[] = ['El Padrino', 'El Señor de los Anillos', 'El Club de la Pelea'];
-
-// Tipar un array de objetos
-
-interface Persona {
+interface Pacientes {
+  id: number;
   nombre: string;
+  apellidos: string;
+  sexo: string;
+  temperatura: number;
+  frecuenciaCardiaca: number;
+  especialidad: Especialidad;
   edad: number;
-};
+}
 
-const personas: Persona[] = [
-  { nombre: 'Juan', edad: 30 },
-  { nombre: 'María', edad: 25 },
-  { nombre: 'Pedro', edad: 35 }
+const pacientes: Pacientes[] = [
+  {
+    id: 1,
+    nombre: "John",
+    apellidos: "Doe",
+    sexo: "Male",
+    temperatura: 36.8,
+    frecuenciaCardiaca: 80,
+    especialidad: "Medico de familia",
+    edad: 44,
+  },
+  {
+    id: 2,
+    nombre: "Jane",
+    apellidos: "Doe",
+    sexo: "Female",
+    temperatura: 36.8,
+    frecuenciaCardiaca: 70,
+    especialidad: "Medico de familia",
+    edad: 43,
+  },
+  {
+    id: 3,
+    nombre: "Junior",
+    apellidos: "Doe",
+    sexo: "Male",
+    temperatura: 36.8,
+    frecuenciaCardiaca: 90,
+    especialidad: "Pediatra",
+    edad: 8,
+  },
+  {
+    id: 4,
+    nombre: "Mary",
+    apellidos: "Wien",
+    sexo: "Female",
+    temperatura: 36.8,
+    frecuenciaCardiaca: 120,
+    especialidad: "Medico de familia",
+    edad: 20,
+  },
+  {
+    id: 5,
+    nombre: "Scarlett",
+    apellidos: "Somez",
+    sexo: "Female",
+    temperatura: 36.8,
+    frecuenciaCardiaca: 110,
+    especialidad: "Cardiólogo",
+    edad: 30,
+  },
+  {
+    id: 6,
+    nombre: "Brian",
+    apellidos: "Kid",
+    sexo: "Male",
+    temperatura: 39.8,
+    frecuenciaCardiaca: 80,
+    especialidad: "Pediatra",
+    edad: 11,
+  },
 ];
 
-// Any
+// Ejercicio 1a
 
-const amalgama: any[] = [1, 'Hola', true, { nombre: 'Juan' }, [1, 2, 3]];
-
-// Como parametro en una función un array tipado
-
-const pintaEdades = (edadColección: number[]) => {
-  console.log(edadColección);
+const obtenPacientesAsignadosAPediatria = (
+  pacientes: Pacientes[]
+): Pacientes[] => {
+    let pacientesPediatria: Pacientes[] = [];
+    for (let i = 0; i < pacientes.length; i++) {
+      if (pacientes[i].especialidad === "Pediatra") {
+        pacientesPediatria = [...pacientesPediatria, pacientes[i]];
+      }
+    }
+    return pacientesPediatria;
 };
 
-pintaEdades(edades);
+const pacientesPediatria = obtenPacientesAsignadosAPediatria(pacientes);
+console.log(pacientesPediatria);
 
-// Devolver un array tipado desde una función
 
-const obtenerPaliculas = (): string[] => {
-  return películas;
+// Ejercicio 1b
+
+const obtenPacientesAsignadosAPediatriaYMenorDeDiezAnios = (
+  pacientes: Pacientes[]
+): Pacientes[] => {
+    let pacientesPediatriaMenoresDeDiez: Pacientes[] = [];
+    for (let i = 0; i < pacientes.length; i++) {
+      if (
+        pacientes[i].especialidad === "Pediatra" &&
+        pacientes[i].edad < 10
+      ) {
+        pacientesPediatriaMenoresDeDiez = [...pacientesPediatriaMenoresDeDiez, pacientes[i]];
+      }
+    }
+    return pacientesPediatriaMenoresDeDiez;
 };
 
-console.log(obtenerPaliculas());
+const pacientesPediatriaMenoresDeDiez = obtenPacientesAsignadosAPediatriaYMenorDeDiezAnios(pacientes);
+console.log(pacientesPediatriaMenoresDeDiez);
 
-// Tipar un bucle for
+// Ejercicio 2: Activar protocolo de urgencia si cualquiera de los pacientes tiene un ritmo cardiaco superior a 100 y una temperatura corporal superior a 39 grados
 
-const apellidos: string[] = ['García', 'Pérez', 'López'];
+const activarProtocoloUrgencia = (pacientes: Pacientes[]): boolean => {
+  let activarProctolo = false;
 
-for (let i: number = 0; i < apellidos.length; i++) {
-  console.log(apellidos[i]);
-};
-
-// Operaciones básicas con arrays tipados
-
-interface Cliente {
-  nombre: string;
-  edad: number;
-};
-
-const ana: Cliente = { nombre: 'Ana', edad: 28 };
-
-const clientes: Cliente[] = [
-  ana,
-  { nombre: 'Luis', edad: 32 },
-  { nombre: 'Sofía', edad: 24 }
-];
-
-// Modificar de forma mutable
-
-clientes[0] = {
-  nombre: 'Ana María',
-  edad: 28
-};
-
-// Modificar de forma inmutable
-
-interface Individuo {
-  nombre: string;
-  edad: number;
-};
-
-const individuo: Individuo = { nombre: 'Ana', edad: 28 };
-
-const individuos: Individuo[] = [
-  individuo,
-  { nombre: 'Luis', edad: 32 },
-  { nombre: 'Sofía', edad: 24 }
-];
-
-individuos[0] = {
-  nombre: 'Ana María',
-  edad: 28
-};
-
-// Tipado con genéricos
-
-const numeros: Array<number> = [1, 2, 3, 4, 5];
-
-const cadenas: Array<string> = ['Hola', 'Mundo', 'TypeScript'];
-
-const objetos: Array<{ nombre: string; edad: number }> = [
-  { nombre: 'Juan', edad: 30 },
-  { nombre: 'María', edad: 25 },
-  { nombre: 'Pedro', edad: 35 }
-];
-
-const cabezaDeLista = (miArray: string[]): string => {
-  return miArray[0];
-};
-
-console.log(cabezaDeLista(cadenas));
-
-const cabezaDeListaGenerica = <T>(miArray: T[]): T => {
-  return miArray[0];
-};
-
-console.log(cabezaDeListaGenerica(numeros));
-console.log(cabezaDeListaGenerica(cadenas));
-console.log(cabezaDeListaGenerica(objetos));
-
-
-// Tipado con genéricos II
-
-const películas2 = ["Batman", "Superman", "Spiderman"];
-
-const peliculasFavoritas = [
-  ...películas2.slice(0,1),
-  ...películas2.slice(2),
-];
-
-console.log(películas2);
-console.log(peliculasFavoritas);
-
-const borrarElemento = <T>(array: T[], index: number): T[] => [
-  ...array.slice(0, index),
-  ...array.slice(index + 1),
-];
-
-const pelisNuevas = borrarElemento(películas2, 1);
-
-console.log(películas2);
-console.log(pelisNuevas);
-
-const number = [1, 2, 3, 4, 5];
-
-const nuevoNumero = borrarElemento(number, 2);
-
-// Función
-
-const peliculas3: string[] = ['El Padrino', 'El Señor de los Anillos', 'El Club de la Pelea'];
-
-const insertaPelicula = <T>(array: T[], pelicula: T, alInicio: boolean): T[] => {
-  if (alInicio) {
-    return [pelicula, ...array];
-  } else {
-    return [...array, pelicula];
+  for (let i = 0; i < pacientes.length; i++) {
+    if (
+      pacientes[i].frecuenciaCardiaca > 100 &&
+      pacientes[i].temperatura > 39
+    ) {
+      activarProctolo = true;
+    }
   }
+  return activarProctolo;
 };
 
-// Con ternario
+const protocoloUrgencia = activarProtocoloUrgencia(pacientes);
+console.log(protocoloUrgencia);
 
-const insertaPelicula2 = <T>(array: T[], pelicula: T, alInicio: boolean): T[] => 
-  alInicio ? [pelicula, ...array] : [...array, pelicula];
+// Ejercicio 2B: Lo mismo pero usando while
 
+const activarProtocoloUrgenciaWhile = (pacientes: Pacientes[]): boolean => {
+  let activarProctolo = false;
+  let i = 0;
 
-const peliculasNuevas2 = insertaPelicula2 (
-  peliculas3,
-  "el Hobbit",
-  false
-);
+  while (i < pacientes.length) {
+    if (
+      pacientes[i].frecuenciaCardiaca > 100 &&
+      pacientes[i].temperatura > 39
+    ) {
+      activarProctolo = true;
+    }
+    i++;
+  }
+  return activarProctolo;
+};
 
-console.log(peliculas3);
-console.log(peliculasNuevas2);
+const protocoloUrgenciaWhile = activarProtocoloUrgenciaWhile(pacientes);
+console.log(protocoloUrgenciaWhile);
 
+// Ejercicio 3: Reasignar los pacientes de pediatría a medicina de familia con spread operator
+
+const reasignarPacientesPediatriaAMedicinaDeFamilia = (
+  pacientes: Pacientes[]
+): Pacientes[] => {
+    let pacientesReasignados: Pacientes[] = [];
+    for (let i = 0; i < pacientes.length; i++) {
+      if (pacientes[i].especialidad === "Pediatra") {
+        pacientesReasignados = [...pacientesReasignados, { ...pacientes[i], especialidad: "Medico de familia" }];
+      }
+    }
+    return pacientesReasignados;
+};
+
+const pacientesReasignados = reasignarPacientesPediatriaAMedicinaDeFamilia(pacientes);
+console.log(pacientesReasignados); 
+
+// Ejercicio 3B: Lo mismo pero usando while
+
+const reasignarPacientesPediatriaAMedicinaDeFamiliaWhile = (
+  pacientes: Pacientes[]
+): Pacientes[] => {
+    let pacientesReasignados: Pacientes[] = [];
+    let i = 0;
+
+    while (i < pacientes.length) {
+      if (pacientes[i].especialidad === "Pediatra") {
+        pacientesReasignados = [...pacientesReasignados, { ...pacientes[i], especialidad: "Medico de familia" }];
+      }
+      i++;
+    }
+    return pacientesReasignados;
+};
+
+const pacientesReasignadosWhile = reasignarPacientesPediatriaAMedicinaDeFamiliaWhile(pacientes);
+console.log(pacientesReasignadosWhile);
+
+// Ejercicio 4: Comprobar si en la lista hay algún paciente asignado a pediatría
+
+const comprobarPacientesAsignadosAPediatria = (pacientes: Pacientes[]): boolean => {
+  let hayPacientesPediatria = false;
+
+  for (let i = 0; i < pacientes.length; i++) {
+    if (pacientes[i].especialidad === "Pediatra") {
+      hayPacientesPediatria = true;
+    }
+  }
+  return hayPacientesPediatria;
+};
+
+const hayPacientesPediatria = comprobarPacientesAsignadosAPediatria(pacientes);
+console.log(hayPacientesPediatria);
+
+// Ejercicio 4B: Lo mismo pero usando while
+
+const comprobarPacientesAsignadosAPediatriaWhile = (pacientes: Pacientes[]): boolean => {
+  let hayPacientesPediatria = false;
+  let i = 0;
+
+  while (i < pacientes.length) {
+    if (pacientes[i].especialidad === "Pediatra") {
+      hayPacientesPediatria = true;
+    }
+    i++;
+  }
+  return hayPacientesPediatria;
+};
+
+const hayPacientesPediatriaWhile = comprobarPacientesAsignadosAPediatriaWhile(pacientes);
+console.log(hayPacientesPediatriaWhile);
+
+// Ejercicio 5: Calcular el número total de paciantes asignados a la especialidad de Medico de familia y los que están asignados a Pediatría y Cardiología
+
+const calcularNumeroPacientesPorEspecialidad = (pacientes: Pacientes[]): { medicoDeFamilia: number; pediatria: number; cardiologia: number } => {
+  let numeroMedicoDeFamilia = 0;
+  let numeroPediatria = 0;
+  let numeroCardiologia = 0;
+
+  for (let i = 0; i < pacientes.length; i++) {
+    if (pacientes[i].especialidad === "Medico de familia") {
+      numeroMedicoDeFamilia++;
+    } else if (pacientes[i].especialidad === "Pediatra") {
+      numeroPediatria++;
+    } else if (pacientes[i].especialidad === "Cardiólogo") {
+      numeroCardiologia++;
+    }
+  }
+  return { medicoDeFamilia: numeroMedicoDeFamilia, pediatria: numeroPediatria, cardiologia: numeroCardiologia };
+};
+
+const numeroPacientesPorEspecialidad = calcularNumeroPacientesPorEspecialidad(pacientes);
+console.log(numeroPacientesPorEspecialidad);
