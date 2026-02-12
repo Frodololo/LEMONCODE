@@ -123,6 +123,7 @@ const activarProtocoloUrgencia = (pacientes: Pacientes[]): boolean => {
       pacientes[i].temperatura > 39
     ) {
       activarProctolo = true;
+      break;
     }
   }
   return activarProctolo;
@@ -143,6 +144,7 @@ const activarProtocoloUrgenciaWhile = (pacientes: Pacientes[]): boolean => {
       pacientes[i].temperatura > 39
     ) {
       activarProctolo = true;
+      break;
     }
     i++;
   }
