@@ -77,39 +77,39 @@ const pacientes: Pacientes[] = [
 // Ejercicio 1a
 
 const obtenPacientesAsignadosAPediatria = (
-  pacientes: Pacientes[]
+  pacientes: Pacientes[],
 ): Pacientes[] => {
-    let pacientesPediatria: Pacientes[] = [];
-    for (let i = 0; i < pacientes.length; i++) {
-      if (pacientes[i].especialidad === "Pediatra") {
-        pacientesPediatria = [...pacientesPediatria, pacientes[i]];
-      }
+  let pacientesPediatria: Pacientes[] = [];
+  for (let i = 0; i < pacientes.length; i++) {
+    if (pacientes[i].especialidad === "Pediatra") {
+      pacientesPediatria = [...pacientesPediatria, pacientes[i]];
     }
-    return pacientesPediatria;
+  }
+  return pacientesPediatria;
 };
 
 const pacientesPediatria = obtenPacientesAsignadosAPediatria(pacientes);
 console.log(pacientesPediatria);
 
-
 // Ejercicio 1b
 
 const obtenPacientesAsignadosAPediatriaYMenorDeDiezAnios = (
-  pacientes: Pacientes[]
+  pacientes: Pacientes[],
 ): Pacientes[] => {
-    let pacientesPediatriaMenoresDeDiez: Pacientes[] = [];
-    for (let i = 0; i < pacientes.length; i++) {
-      if (
-        pacientes[i].especialidad === "Pediatra" &&
-        pacientes[i].edad < 10
-      ) {
-        pacientesPediatriaMenoresDeDiez = [...pacientesPediatriaMenoresDeDiez, pacientes[i]];
-      }
+  let pacientesPediatriaMenoresDeDiez: Pacientes[] = [];
+  for (let i = 0; i < pacientes.length; i++) {
+    if (pacientes[i].especialidad === "Pediatra" && pacientes[i].edad < 10) {
+      pacientesPediatriaMenoresDeDiez = [
+        ...pacientesPediatriaMenoresDeDiez,
+        pacientes[i],
+      ];
     }
-    return pacientesPediatriaMenoresDeDiez;
+  }
+  return pacientesPediatriaMenoresDeDiez;
 };
 
-const pacientesPediatriaMenoresDeDiez = obtenPacientesAsignadosAPediatriaYMenorDeDiezAnios(pacientes);
+const pacientesPediatriaMenoresDeDiez =
+  obtenPacientesAsignadosAPediatriaYMenorDeDiezAnios(pacientes);
 console.log(pacientesPediatriaMenoresDeDiez);
 
 // Ejercicio 2: Activar protocolo de urgencia si cualquiera de los pacientes tiene un ritmo cardiaco superior a 100 y una temperatura corporal superior a 39 grados
@@ -157,48 +157,59 @@ console.log(protocoloUrgenciaWhile);
 // Ejercicio 3: Reasignar los pacientes de pediatría a medicina de familia con spread operator
 
 const reasignarPacientesPediatriaAMedicinaDeFamilia = (
-  pacientes: Pacientes[]
+  pacientes: Pacientes[],
 ): Pacientes[] => {
-    let pacientesReasignados: Pacientes[] = [];
-    for (let i = 0; i < pacientes.length; i++) {
-      if (pacientes[i].especialidad === "Pediatra") {
-        pacientesReasignados = [...pacientesReasignados, { ...pacientes[i], especialidad: "Medico de familia" }];
-      }
+  let pacientesReasignados: Pacientes[] = [];
+  for (let i = 0; i < pacientes.length; i++) {
+    if (pacientes[i].especialidad === "Pediatra") {
+      pacientesReasignados = [
+        ...pacientesReasignados,
+        { ...pacientes[i], especialidad: "Medico de familia" },
+      ];
     }
-    return pacientesReasignados;
+  }
+  return pacientesReasignados;
 };
 
-const pacientesReasignados = reasignarPacientesPediatriaAMedicinaDeFamilia(pacientes);
-console.log(pacientesReasignados); 
+const pacientesReasignados =
+  reasignarPacientesPediatriaAMedicinaDeFamilia(pacientes);
+console.log(pacientesReasignados);
 
 // Ejercicio 3B: Lo mismo pero usando while
 
 const reasignarPacientesPediatriaAMedicinaDeFamiliaWhile = (
-  pacientes: Pacientes[]
+  pacientes: Pacientes[],
 ): Pacientes[] => {
-    let pacientesReasignados: Pacientes[] = [];
-    let i = 0;
+  let pacientesReasignados: Pacientes[] = [];
+  let i = 0;
 
-    while (i < pacientes.length) {
-      if (pacientes[i].especialidad === "Pediatra") {
-        pacientesReasignados = [...pacientesReasignados, { ...pacientes[i], especialidad: "Medico de familia" }];
-      }
-      i++;
+  while (i < pacientes.length) {
+    if (pacientes[i].especialidad === "Pediatra") {
+      pacientesReasignados = [
+        ...pacientesReasignados,
+        { ...pacientes[i], especialidad: "Medico de familia" },
+      ];
     }
-    return pacientesReasignados;
+    i++;
+  }
+  return pacientesReasignados;
 };
 
-const pacientesReasignadosWhile = reasignarPacientesPediatriaAMedicinaDeFamiliaWhile(pacientes);
+const pacientesReasignadosWhile =
+  reasignarPacientesPediatriaAMedicinaDeFamiliaWhile(pacientes);
 console.log(pacientesReasignadosWhile);
 
 // Ejercicio 4: Comprobar si en la lista hay algún paciente asignado a pediatría
 
-const comprobarPacientesAsignadosAPediatria = (pacientes: Pacientes[]): boolean => {
+const comprobarPacientesAsignadosAPediatria = (
+  pacientes: Pacientes[],
+): boolean => {
   let hayPacientesPediatria = false;
 
   for (let i = 0; i < pacientes.length; i++) {
     if (pacientes[i].especialidad === "Pediatra") {
       hayPacientesPediatria = true;
+      break;
     }
   }
   return hayPacientesPediatria;
@@ -209,25 +220,31 @@ console.log(hayPacientesPediatria);
 
 // Ejercicio 4B: Lo mismo pero usando while
 
-const comprobarPacientesAsignadosAPediatriaWhile = (pacientes: Pacientes[]): boolean => {
+const comprobarPacientesAsignadosAPediatriaWhile = (
+  pacientes: Pacientes[],
+): boolean => {
   let hayPacientesPediatria = false;
   let i = 0;
 
   while (i < pacientes.length) {
     if (pacientes[i].especialidad === "Pediatra") {
       hayPacientesPediatria = true;
+      break;
     }
     i++;
   }
   return hayPacientesPediatria;
 };
 
-const hayPacientesPediatriaWhile = comprobarPacientesAsignadosAPediatriaWhile(pacientes);
+const hayPacientesPediatriaWhile =
+  comprobarPacientesAsignadosAPediatriaWhile(pacientes);
 console.log(hayPacientesPediatriaWhile);
 
 // Ejercicio 5: Calcular el número total de paciantes asignados a la especialidad de Medico de familia y los que están asignados a Pediatría y Cardiología
 
-const calcularNumeroPacientesPorEspecialidad = (pacientes: Pacientes[]): { medicoDeFamilia: number; pediatria: number; cardiologia: number } => {
+const calcularNumeroPacientesPorEspecialidad = (
+  pacientes: Pacientes[],
+): { medicoDeFamilia: number; pediatria: number; cardiologia: number } => {
   let numeroMedicoDeFamilia = 0;
   let numeroPediatria = 0;
   let numeroCardiologia = 0;
@@ -241,8 +258,13 @@ const calcularNumeroPacientesPorEspecialidad = (pacientes: Pacientes[]): { medic
       numeroCardiologia++;
     }
   }
-  return { medicoDeFamilia: numeroMedicoDeFamilia, pediatria: numeroPediatria, cardiologia: numeroCardiologia };
+  return {
+    medicoDeFamilia: numeroMedicoDeFamilia,
+    pediatria: numeroPediatria,
+    cardiologia: numeroCardiologia,
+  };
 };
 
-const numeroPacientesPorEspecialidad = calcularNumeroPacientesPorEspecialidad(pacientes);
+const numeroPacientesPorEspecialidad =
+  calcularNumeroPacientesPorEspecialidad(pacientes);
 console.log(numeroPacientesPorEspecialidad);
